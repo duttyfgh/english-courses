@@ -1,119 +1,27 @@
 'use client'
 
 import Image from "next/image"
-import { motion, Variants } from "motion/react"
-
-import Header from "./header"
-import { useRef, useState } from "react"
 import Link from "next/link"
 
-const appearingAnimation: Variants = {
-    hidden: {
-        right: 0,
-        opacity: 0,
-        width: "0px"
-    },
-    visible: {
-        right: 0,
-        opacity: 1,
-        width: "200px",
-        transition: {
-            duration: .2,
-            ease: 'easeOut',
-        },
-    }
-}
+import { useNavbar, headerItems } from "@/hooks/navbar-hooks"
 
-const disappearingAnimation: Variants = {
-    hidden: {
-        right: 0,
-        opacity: 1,
-        width: "200px",
-        transition: {
-            duration: .2,
-            ease: 'easeInOut',
-        }
-    },
-    visible: {
-        right: 0,
-        opacity: 0,
-        width: "0px"
-    },
-}
-
-const headerItems = [
-    {
-        title: 'Навчання',
-        href: '#education'
-    },
-    {
-        title: 'Відгуки',
-        href: '/feedback'
-    },
-    {
-        title: `Зв'язок`,
-        href: '#contacts'
-    },
-    {
-        title: 'Питання',
-        href: '/faq'
-    }
-
-]
+import Header from "./header"
+import Navbar from "./navbar"
 
 const Landing = () => {
-    const [isNavBar, setIsNavBar] = useState<boolean>(false)
-    const [animation, setAnimation] = useState<Variants>(appearingAnimation)
-
-    const navBarTimerRef = useRef<NodeJS.Timeout | null>(null)
-
-    const openNavBar = () => {
-        if (navBarTimerRef.current) {
-            clearTimeout(navBarTimerRef.current)
-        }
-
-        setAnimation(appearingAnimation)
-
-        navBarTimerRef.current = setTimeout(() => {
-            setIsNavBar(true)
-        }, 50)
-    }
-
-    const closeNavBar = () => {
-        if (navBarTimerRef.current) {
-            clearTimeout(navBarTimerRef.current)
-        }
-
-        setAnimation(disappearingAnimation)
-
-        navBarTimerRef.current = setTimeout(() => {
-            setIsNavBar(false)
-        }, 50)
-    }
+    const { openNavBar, closeNavBar, animation, isNavBar } = useNavbar()
 
     return (
         <>
-            {isNavBar && (<motion.div
-                animate='visible'
-                initial='hidden'
-                variants={animation}
-                className="absolute z-20 h-screen w-[200px] bg-[#020112bf] p-[40px] flex flex-col gap-[60px] backdrop-blur-[6px]"
-
-            >
-                <Image src='/arrow-back.svg' width={10} height={20} alt="<" onClick={closeNavBar} />
-
-                <div className="flex flex-col gap-[30px] text-[#cccccc]">
-                    {headerItems.map((i) => (
-                        <Link href={i.href} key={i.title} onClick={closeNavBar}>
-                            {i.title}
-                        </Link>
-                    ))}
-                </div>
-            </motion.div>)
-            }
+            <Navbar
+                closeNavBar={closeNavBar}
+                isNavBar={isNavBar}
+                animation={animation}
+                headerItems={headerItems}
+            />
 
             <div
-                className='bg-[linear-gradient(180deg,_#6C4AF5_0%,_#4026AB_27%,_#190668_51%,_#020111_81%)] h-screen w-full) xl:px-[100px] xl:pt-[50px] px-[35px] pt-[35px] flex flex-col items-center justify-between  gap-6'
+                className='bg-[linear-gradient(180deg,_#6C4AF5_0%,_#4026AB_27%,_#190668_51%,_#020111_81%)] h-screen w-full) xl:px-[100px] xl:pt-[50px] px-[35px] pt-[35px] flex flex-col items-center justify-between gap-6'
                 onClick={isNavBar ? closeNavBar : () => { }}
                 id="landing"
             >

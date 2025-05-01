@@ -1,4 +1,3 @@
-
 import Contacts from "@/components/contacts"
 import Education from "@/components/education"
 import Landing from "@/components/landing"
