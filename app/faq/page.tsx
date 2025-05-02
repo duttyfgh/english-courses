@@ -18,7 +18,7 @@ const Faq = () => {
                 headerItems={headerItems}
             />
             <div className="w-[320px] h-[360px] absolute -top-30 left-0 right-0 mx-auto bg-[#5D3ED9] blur-3xl rounded-full z-[-1]" />
-            <div className='z-20 xl:px-[100px] xl:pt-[50px] px-[35px] pt-[35px] flex flex-col items-center h-screen '>
+            <div className='z-20 xl:px-[100px] xl:pt-[50px] px-[35px] pt-[35px] flex flex-col items-center h-full '>
                 <Header openNavBar={openNavBar} headerItems={headerItems} />
 
                 <div className='w-full h-full flex flex-col justify-center items-center gap-[50px]'>
